@@ -1151,6 +1151,117 @@ footer {
 .findus-lead-text { font-size: 13px; color: var(--dark-mid); line-height: 1.4; }
 .findus-lead-text strong { color: var(--black); display: block; font-size: 13.5px; }
 
+
+/* SOCIAL PROOF NOTIFICATION */
+.sp-notif {
+  position: fixed;
+  bottom: 88px;
+  left: 12px;
+  right: 12px;
+  max-width: 406px;
+  margin: 0 auto;
+  background: rgba(10,10,10,0.96);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  z-index: 700;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.38s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: none;
+}
+.sp-notif.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+.sp-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5dc8e8, #c8d88a);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-family: 'Fraunces', serif;
+  font-size: 14px; font-weight: 700; font-style: italic;
+  color: var(--black);
+}
+.sp-text { flex: 1; min-width: 0; }
+.sp-name {
+  font-size: 12.5px; font-weight: 700;
+  color: rgba(255,255,255,0.95);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sp-action {
+  font-size: 11px; color: rgba(255,255,255,0.52);
+  margin-top: 1px; line-height: 1.35;
+}
+.sp-product {
+  font-size: 11px; color: rgba(255,255,255,0.75);
+  font-weight: 600;
+}
+.sp-time {
+  font-size: 10px; color: rgba(255,255,255,0.32);
+  flex-shrink: 0; align-self: flex-start; margin-top: 2px;
+}
+.sp-amazon-badge {
+  background: #FF9900;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 9px; font-weight: 900;
+  color: #000; letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+
+/* AMAZON REDIRECT OVERLAY */
+.amazon-redirect {
+  position: fixed; inset: 0; z-index: 900;
+  background: rgba(0,0,0,0.82);
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 20px;
+  backdrop-filter: blur(6px);
+}
+.amazon-redirect.show { display: flex; }
+.amazon-redirect-box {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 32px 28px;
+  max-width: 320px;
+  width: calc(100% - 48px);
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  animation: popIn 0.32s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes popIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.amazon-redirect-logo {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 28px; font-weight: 900; letter-spacing: -0.05em;
+  color: #000;
+}
+.amazon-redirect-logo span { color: #FF9900; }
+.amazon-redirect-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px; font-weight: 700; font-style: italic;
+  color: var(--black); line-height: 1.2;
+}
+.amazon-redirect-sub {
+  font-size: 12.5px; color: var(--dark-mid); line-height: 1.5;
+}
+.amazon-redirect-spinner {
+  width: 36px; height: 36px;
+  border: 3px solid #f0f0f0;
+  border-top-color: #FF9900;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
 </style>
 </head>
 <body>
@@ -1569,6 +1680,32 @@ footer {
 </footer>
 
 
+
+<!-- AMAZON REDIRECT OVERLAY -->
+<div class="amazon-redirect" id="amazonRedirect">
+  <div class="amazon-redirect-box">
+    <div class="amazon-redirect-logo">amazon<span>.</span></div>
+    <div class="amazon-redirect-spinner"></div>
+    <div class="amazon-redirect-title">Taking you to Amazon</div>
+    <div class="amazon-redirect-sub">You'll find the best price and free Prime delivery there.</div>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF NOTIFICATION -->
+<div class="sp-notif" id="spNotif">
+  <div class="sp-avatar" id="spAvatar">P</div>
+  <div class="sp-text">
+    <div class="sp-name" id="spName">Peter B.</div>
+    <div class="sp-action">
+      <span id="spAction">just bought</span>
+      <span class="sp-product" id="spProduct">Creamy Fruit Pops</span>
+      <span id="spLocation"> · Texas</span>
+    </div>
+  </div>
+  <span class="sp-time" id="spTime">2m ago</span>
+  <span class="sp-amazon-badge">amazon</span>
+</div>
+
 <!-- LEAD CAPTURE MODAL -->
 <div class="modal-overlay" id="leadModal" onclick="closeLeadModal(event)">
   <div class="modal-sheet">
@@ -1836,7 +1973,7 @@ function renderProducts(filter = 'all') {
   const grid = document.getElementById('productGrid');
   const items = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === filter);
   grid.innerHTML = items.map(p => `
-    <div class="product-card" onclick="openPDP(${p.id})">
+    <div class="product-card" onclick="openAmazonProduct(${p.id})">
       ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
       <div class="product-img-wrap" style="background:${CARD_COLORS[p.id] || '#ece8e0'}">
         <img src="${p.img}" alt="${p.name}" loading="lazy">
@@ -1849,7 +1986,7 @@ function renderProducts(filter = 'all') {
             ${p.price}
             ${p.orig ? `<span class="orig">${p.orig}</span>` : ''}
           </div>
-          <button class="add-btn" onclick="event.stopPropagation(); openAmazon()">+</button>
+          <button class="add-btn" onclick="event.stopPropagation(); openAmazonProduct(${p.id})">+</button>
         </div>
       </div>
     </div>
@@ -1932,6 +2069,50 @@ function switchTab(tab, btn) {
   btn.classList.add('active');
   if (tab !== 'home') showToast('Opening ' + tab + '...');
   else window.scrollTo(0,0);
+}
+
+
+// ── SOCIAL PROOF NOTIFICATIONS ──
+const SP_DATA = [
+  { name: 'Peter B.', initials: 'PB', product: 'Creamy Fruit Pops', location: 'Texas', time: '2m ago', gradient: 'linear-gradient(135deg,#5dc8e8,#a8e6cf)' },
+  { name: 'Sarah M.', initials: 'SM', product: 'Smoothie Bowls', location: 'California', time: '5m ago', gradient: 'linear-gradient(135deg,#f8b4cb,#ffd3a8)' },
+  { name: 'James K.', initials: 'JK', product: 'Dessert Pops', location: 'New York', time: '8m ago', gradient: 'linear-gradient(135deg,#f2b08a,#f5d020)' },
+  { name: 'Lisa R.', initials: 'LR', product: 'Nut Butter Bites', location: 'Florida', time: '11m ago', gradient: 'linear-gradient(135deg,#6aabdf,#c8d8ff)' },
+  { name: 'Mike T.', initials: 'MT', product: 'Smoothie Pops', location: 'Ohio', time: '14m ago', gradient: 'linear-gradient(135deg,#c8d88a,#a8e6cf)' },
+  { name: 'Anna D.', initials: 'AD', product: 'PAW Patrol Pops', location: 'Illinois', time: '17m ago', gradient: 'linear-gradient(135deg,#f5d020,#f8b4cb)' },
+  { name: 'Chris L.', initials: 'CL', product: 'Creamy Fruit Pops', location: 'Washington', time: '20m ago', gradient: 'linear-gradient(135deg,#5dc8e8,#6aabdf)' },
+  { name: 'Priya S.', initials: 'PS', product: 'Smoothie Bowls', location: 'Georgia', time: '23m ago', gradient: 'linear-gradient(135deg,#f8b4cb,#c8d88a)' },
+];
+
+let spIndex = 0;
+let spTimer = null;
+
+function showSPNotif() {
+  const d = SP_DATA[spIndex % SP_DATA.length];
+  spIndex++;
+  const el = document.getElementById('spNotif');
+  document.getElementById('spAvatar').textContent = d.initials;
+  document.getElementById('spAvatar').style.background = d.gradient;
+  document.getElementById('spName').textContent = d.name;
+  document.getElementById('spProduct').textContent = d.product;
+  document.getElementById('spLocation').textContent = ' · ' + d.location;
+  document.getElementById('spTime').textContent = d.time;
+  el.classList.add('show');
+  clearTimeout(spTimer);
+  spTimer = setTimeout(() => el.classList.remove('show'), 4200);
+}
+
+// Start after 3s, then every 12-20s randomly
+setTimeout(() => {
+  showSPNotif();
+  setInterval(showSPNotif, 14000 + Math.random() * 6000);
+}, 3000);
+
+// Amazon redirect overlay
+function showAmazonRedirectToast() {
+  const el = document.getElementById('amazonRedirect');
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 1800);
 }
 
 renderProducts();
