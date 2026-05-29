@@ -949,6 +949,208 @@ footer {
   100% { width: 100%; }
 }
 
+
+/* ── LEAD CAPTURE MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 800;
+  background: rgba(0,0,0,0.72);
+  display: none; align-items: flex-end;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal-sheet {
+  background: var(--white);
+  width: 100%; max-width: 430px; margin: 0 auto;
+  border-radius: 22px 22px 0 0;
+  padding: 0 0 40px;
+  animation: slideUp 0.36s cubic-bezier(0.32,0.72,0,1);
+  position: relative;
+}
+.modal-handle {
+  width: 36px; height: 4px;
+  background: #ddd8d0; border-radius: 2px;
+  margin: 14px auto 0;
+}
+.modal-close-btn {
+  position: absolute; top: 14px; right: 18px;
+  background: #f0ece5; border: none;
+  width: 30px; height: 30px; border-radius: 50%;
+  cursor: pointer; font-size: 14px; color: var(--black);
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-img-strip {
+  width: 100%; height: 160px;
+  overflow: hidden; position: relative;
+  background: #5dc8e8;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 0;
+}
+.modal-img-strip img {
+  height: 140px; object-fit: contain;
+}
+.modal-body { padding: 22px 24px 0; }
+.modal-eyebrow {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--dark-mid); margin-bottom: 6px;
+}
+.modal-title {
+  font-family: 'Fraunces', serif;
+  font-size: 24px; font-weight: 900; font-style: italic;
+  color: var(--black); line-height: 1.1; margin-bottom: 8px;
+}
+.modal-sub {
+  font-size: 13.5px; color: var(--dark-mid);
+  line-height: 1.55; margin-bottom: 20px;
+}
+.modal-form { display: flex; flex-direction: column; gap: 10px; }
+.modal-input {
+  background: var(--off-white);
+  border: 1.5px solid #ddd8d0;
+  color: var(--black);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; padding: 13px 16px;
+  border-radius: 12px; outline: none;
+  transition: border-color 0.2s;
+}
+.modal-input:focus { border-color: var(--black); }
+.modal-input::placeholder { color: #aaa8a0; }
+.modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.modal-submit {
+  background: var(--black); color: var(--white);
+  border: none; width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 700;
+  padding: 15px; border-radius: 40px; cursor: pointer;
+  letter-spacing: 0.03em; margin-top: 4px;
+}
+.modal-amazon-btn {
+  background: #FF9900; color: var(--black);
+  border: none; width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 700;
+  padding: 15px; border-radius: 40px; cursor: pointer;
+  letter-spacing: 0.03em;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.amazon-logo-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px; font-weight: 900;
+  letter-spacing: -0.04em;
+}
+.modal-divider {
+  display: flex; align-items: center; gap: 10px;
+  margin: 4px 0;
+}
+.modal-divider-line { flex: 1; height: 1px; background: #e5e0d8; }
+.modal-divider-text { font-size: 11px; color: var(--mid); font-weight: 500; }
+.modal-fine {
+  font-size: 10px; color: var(--mid);
+  text-align: center; margin-top: 8px; line-height: 1.4;
+}
+.modal-success {
+  text-align: center; padding: 30px 24px;
+  display: none; flex-direction: column; align-items: center; gap: 12px;
+}
+.modal-success.show { display: flex; }
+.modal-success-icon {
+  width: 52px; height: 52px;
+  background: var(--black); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-success-icon svg { width: 22px; height: 22px; stroke: var(--white); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.modal-success-title {
+  font-family: 'Fraunces', serif;
+  font-size: 22px; font-weight: 700; font-style: italic;
+  color: var(--black);
+}
+.modal-success-sub { font-size: 13px; color: var(--dark-mid); line-height: 1.5; }
+
+/* FIND US SHEET */
+.findus-overlay {
+  position: fixed; inset: 0; z-index: 800;
+  background: rgba(0,0,0,0.72);
+  display: none; align-items: flex-end;
+  backdrop-filter: blur(4px);
+}
+.findus-overlay.open { display: flex; }
+.findus-sheet {
+  background: var(--white);
+  width: 100%; max-width: 430px; margin: 0 auto;
+  border-radius: 22px 22px 0 0;
+  padding: 0 0 50px;
+  animation: slideUp 0.36s cubic-bezier(0.32,0.72,0,1);
+  position: relative;
+  max-height: 88vh; overflow-y: auto;
+}
+.findus-handle {
+  width: 36px; height: 4px;
+  background: #ddd8d0; border-radius: 2px;
+  margin: 14px auto 0;
+}
+.findus-close {
+  position: absolute; top: 14px; right: 18px;
+  background: #f0ece5; border: none;
+  width: 30px; height: 30px; border-radius: 50%;
+  cursor: pointer; font-size: 14px; color: var(--black);
+  display: flex; align-items: center; justify-content: center;
+}
+.findus-body { padding: 22px 22px 0; }
+.findus-title {
+  font-family: 'Fraunces', serif;
+  font-size: 26px; font-weight: 900; font-style: italic;
+  color: var(--black); line-height: 1.1; margin-bottom: 6px;
+}
+.findus-sub { font-size: 13px; color: var(--dark-mid); margin-bottom: 22px; line-height: 1.5; }
+.findus-section-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--dark-mid); margin-bottom: 12px;
+}
+.findus-retailers {
+  display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;
+}
+.findus-retailer {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--off-white);
+  border: 1px solid #e5e0d8;
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.findus-retailer:hover { background: #ece8e2; }
+.findus-retailer-left { display: flex; align-items: center; gap: 12px; }
+.findus-retailer-icon {
+  width: 38px; height: 38px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 900; letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+.findus-retailer-name { font-size: 14px; font-weight: 700; color: var(--black); }
+.findus-retailer-sub { font-size: 11px; color: var(--dark-mid); }
+.findus-retailer-arrow { font-size: 18px; color: var(--mid); }
+.findus-map-btn {
+  background: var(--black); color: var(--white);
+  border: none; width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 700;
+  padding: 15px; border-radius: 40px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-bottom: 14px;
+}
+.findus-map-btn svg { width: 16px; height: 16px; stroke: var(--white); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.findus-lead-row {
+  background: #f6f3ee; border-radius: 12px;
+  padding: 14px 16px;
+  display: flex; align-items: center; gap: 12px;
+  cursor: pointer;
+}
+.findus-lead-text { font-size: 13px; color: var(--dark-mid); line-height: 1.4; }
+.findus-lead-text strong { color: var(--black); display: block; font-size: 13.5px; }
+
 </style>
 </head>
 <body>
@@ -1007,8 +1209,8 @@ footer {
     <h1 class="hero-title" id="heroTitle">Reimagining<br>Snack Time.</h1>
     <p class="hero-sub" id="heroSub">No added sugar. No preservatives.<br>Just real, delicious fruit.</p>
     <div class="hero-cta">
-      <button class="btn-primary" onclick="showToast('Opening collection...')">Shop Now</button>
-      <button class="btn-outline" onclick="showToast('Exploring our story...')">Our Story</button>
+      <button class="btn-primary" onclick="openAmazon()">Find on Amazon</button>
+      <button class="btn-outline" onclick="openFindUs()">Find a Store</button>
     </div>
   </div>
   <div class="hero-dots">
@@ -1311,7 +1513,7 @@ footer {
     </div>
   </div>
   <div class="ugc-cta-row">
-    <button class="ugc-follow-btn" onclick="showToast('Opening Instagram...')">Follow @eatsweetnothings</button>
+    <button class="ugc-follow-btn" onclick="window.open('https://www.instagram.com/eatsweetnothings/','_blank')">Follow @eatsweetnothings</button>
   </div>
 </div>
 
@@ -1345,7 +1547,7 @@ footer {
     <div>
       <div class="footer-col-title">Products</div>
       <div class="footer-links">
-        <a href="#">All Products</a>
+        <a href="https://www.amazon.com/stores/SweetNothings/page/371857C7-10B8-4107-892B-3534815114F8" target="_blank">Shop on Amazon</a>
         <a href="#">Squeezable Pops</a>
         <a href="#">Creamy Fruit Pops</a>
         <a href="#">Smoothie Bowls</a>
@@ -1356,7 +1558,7 @@ footer {
       <div class="footer-col-title">Company</div>
       <div class="footer-links">
         <a href="#">About Us</a>
-        <a href="#">Store Locator</a>
+        <a href="https://sweetnothings.com/pages/find-us" target="_blank">Find a Store</a>
         <a href="#">FAQs</a>
         <a href="#">Wholesale</a>
         <a href="#">Contact</a>
@@ -1366,15 +1568,157 @@ footer {
   <div class="footer-copy">© 2026 Sweet Nothings. All rights reserved.</div>
 </footer>
 
+
+<!-- LEAD CAPTURE MODAL -->
+<div class="modal-overlay" id="leadModal" onclick="closeLeadModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <button class="modal-close-btn" onclick="closeLeadModal()">&#x2715;</button>
+    <div class="modal-img-strip">
+      <img src="https://sweetnothings.com/cdn/shop/files/Image02c_Fruit-Pops_Apple-Berry_1200x1200_4fb2d427-212c-4b79-8a6f-029d9ae6ad06.png?v=1727822271&width=400" alt="Sweet Nothings">
+    </div>
+    <div class="modal-body">
+      <div id="leadFormWrap">
+        <div class="modal-eyebrow">Stay in the loop</div>
+        <div class="modal-title">Get early access &amp;<br>exclusive offers.</div>
+        <div class="modal-sub">Drop your details and we'll let you know when Sweet Nothings lands near you — plus 10% off your first Amazon order.</div>
+        <div class="modal-form">
+          <div class="modal-row">
+            <input class="modal-input" type="text" id="leadFirstName" placeholder="First name">
+            <input class="modal-input" type="text" id="leadLastName" placeholder="Last name">
+          </div>
+          <input class="modal-input" type="email" id="leadEmail" placeholder="Email address">
+          <input class="modal-input" type="tel" id="leadPhone" placeholder="Phone number (optional)">
+          <input class="modal-input" type="text" id="leadCity" placeholder="Your city / zip code">
+          <button class="modal-submit" onclick="submitLead()">Get My 10% Off &rarr;</button>
+          <div class="modal-divider">
+            <div class="modal-divider-line"></div>
+            <span class="modal-divider-text">or shop now</span>
+            <div class="modal-divider-line"></div>
+          </div>
+          <button class="modal-amazon-btn" onclick="openAmazon()">
+            <span class="amazon-logo-text">amazon</span> &nbsp; Buy on Amazon
+          </button>
+          <p class="modal-fine">No spam. We'll only contact you about Sweet Nothings drops and deals.</p>
+        </div>
+      </div>
+      <div class="modal-success" id="leadSuccess">
+        <div class="modal-success-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="modal-success-title">You're in!</div>
+        <div class="modal-success-sub">We'll send your 10% off code shortly. In the meantime, grab your first pack on Amazon.</div>
+        <button class="modal-amazon-btn" onclick="openAmazon()" style="margin-top:8px">
+          <span class="amazon-logo-text">amazon</span> &nbsp; Shop Now
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FIND US SHEET -->
+<div class="findus-overlay" id="findusOverlay" onclick="closeFindUs(event)">
+  <div class="findus-sheet">
+    <div class="findus-handle"></div>
+    <button class="findus-close" onclick="closeFindUs()">&#x2715;</button>
+    <div class="findus-body">
+      <div class="findus-title">Find Sweet<br>Nothings Near You.</div>
+      <div class="findus-sub">Available online and at retailers across the US. Buy fresh, keep frozen.</div>
+
+      <div class="findus-section-label">Shop Online</div>
+      <div class="findus-retailers">
+        <a class="findus-retailer" href="https://www.amazon.com/stores/SweetNothings/page/371857C7-10B8-4107-892B-3534815114F8" target="_blank">
+          <div class="findus-retailer-left">
+            <div class="findus-retailer-icon" style="background:#FF9900;color:#000">a</div>
+            <div>
+              <div class="findus-retailer-name">Amazon</div>
+              <div class="findus-retailer-sub">Free Prime delivery · All products</div>
+            </div>
+          </div>
+          <span class="findus-retailer-arrow">›</span>
+        </a>
+        <a class="findus-retailer" href="https://www.instacart.com/products/37453565" target="_blank">
+          <div class="findus-retailer-left">
+            <div class="findus-retailer-icon" style="background:#43B02A;color:#fff;font-size:9px">cart</div>
+            <div>
+              <div class="findus-retailer-name">Instacart</div>
+              <div class="findus-retailer-sub">Same-day delivery · Select products</div>
+            </div>
+          </div>
+          <span class="findus-retailer-arrow">›</span>
+        </a>
+      </div>
+
+      <div class="findus-section-label">In-Store Retailers</div>
+      <div class="findus-retailers">
+        <div class="findus-retailer" onclick="showToast('Opening store locator...');window.open('https://sweetnothings.com/pages/find-us','_blank')">
+          <div class="findus-retailer-left">
+            <div class="findus-retailer-icon" style="background:#0071CE;color:#fff;font-size:9px">W</div>
+            <div>
+              <div class="findus-retailer-name">Walmart</div>
+              <div class="findus-retailer-sub">Frozen section · Select locations</div>
+            </div>
+          </div>
+          <span class="findus-retailer-arrow">›</span>
+        </div>
+        <div class="findus-retailer" onclick="showToast('Opening store locator...');window.open('https://sweetnothings.com/pages/find-us','_blank')">
+          <div class="findus-retailer-left">
+            <div class="findus-retailer-icon" style="background:#cc0000;color:#fff;font-size:9px">T</div>
+            <div>
+              <div class="findus-retailer-name">Target</div>
+              <div class="findus-retailer-sub">Frozen aisle · Select stores</div>
+            </div>
+          </div>
+          <span class="findus-retailer-arrow">›</span>
+        </div>
+        <div class="findus-retailer" onclick="showToast('Opening store locator...');window.open('https://sweetnothings.com/pages/find-us','_blank')">
+          <div class="findus-retailer-left">
+            <div class="findus-retailer-icon" style="background:#004990;color:#fff;font-size:9px">K</div>
+            <div>
+              <div class="findus-retailer-name">Kroger &amp; affiliates</div>
+              <div class="findus-retailer-sub">Frozen section · Nationwide</div>
+            </div>
+          </div>
+          <span class="findus-retailer-arrow">›</span>
+        </div>
+        <div class="findus-retailer" onclick="showToast('Opening store locator...');window.open('https://sweetnothings.com/pages/find-us','_blank')">
+          <div class="findus-retailer-left">
+            <div class="findus-retailer-icon" style="background:#007DC6;color:#fff;font-size:9px">WF</div>
+            <div>
+              <div class="findus-retailer-name">Whole Foods</div>
+              <div class="findus-retailer-sub">Organic frozen section</div>
+            </div>
+          </div>
+          <span class="findus-retailer-arrow">›</span>
+        </div>
+      </div>
+
+      <button class="findus-map-btn" onclick="window.open('https://sweetnothings.com/pages/find-us','_blank')">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Full Store Locator Map
+      </button>
+
+      <div class="findus-lead-row" onclick="closeFindUs();openLeadModal()">
+        <svg style="width:20px;height:20px;stroke:var(--dark-mid);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <div class="findus-lead-text">
+          <strong>Not in your city yet?</strong>
+          Get notified when we expand to your area — plus 10% off.
+        </div>
+        <span class="findus-retailer-arrow">›</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <button class="nav-tab active" onclick="switchTab('home', this)">
     <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     <span>Home</span>
   </button>
-  <button class="nav-tab" onclick="switchTab('shop', this)">
+  <button class="nav-tab" onclick="openAmazon()">
     <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-    <span>Shop</span>
+    <span>Amazon</span>
   </button>
   <button class="nav-tab" onclick="switchTab('find', this)">
     <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -1428,8 +1772,8 @@ footer {
         <button class="qty-btn" onclick="changeQty(1)">&#x2B;</button>
       </div>
       <div class="pdp-actions">
-        <button class="pdp-atc" onclick="showToast('Added to cart'); closePDP()">Add to Cart</button>
-        <button class="pdp-wishlist" onclick="showToast('Saved to wishlist')">Save to Wishlist</button>
+        <button class="pdp-atc" onclick="openAmazonPDP()">Buy on Amazon</button>
+        <button class="pdp-wishlist" onclick="openLeadModal()">Get Notified When Near You</button>
       </div>
       <div class="pdp-divider"></div>
       <div class="pdp-attr-title" style="margin-bottom:8px">About this product</div>
@@ -1505,7 +1849,7 @@ function renderProducts(filter = 'all') {
             ${p.price}
             ${p.orig ? `<span class="orig">${p.orig}</span>` : ''}
           </div>
-          <button class="add-btn" onclick="event.stopPropagation(); showToast('${p.name} added to cart')">+</button>
+          <button class="add-btn" onclick="event.stopPropagation(); openAmazon()">+</button>
         </div>
       </div>
     </div>
