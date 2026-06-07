@@ -328,6 +328,263 @@ footer{background:var(--k);padding:76px 80px 44px;border-top:1px solid rgba(255,
   .ft{grid-template-columns:1fr 1fr;gap:28px}
   .px-con{padding:80px 22px}
 }
+
+/* ════ SPIN LOCATOR WIDGET ════ */
+.locator-wrap {
+  position: fixed;
+  bottom: 36px;
+  right: 36px;
+  z-index: 690;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+/* Main spin button */
+.locator-btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: none;
+  cursor: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.08);
+  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s;
+  overflow: visible;
+}
+.locator-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 36px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.1);
+}
+.locator-btn.spinning .locator-ring {
+  animation: locRingSpin 1.2s linear infinite;
+}
+.locator-btn.located {
+  background: var(--acid);
+  box-shadow: 0 4px 24px rgba(212,255,60,0.5);
+}
+/* Spinning ring around button */
+.locator-ring {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--acid);
+  border-right-color: rgba(212,255,60,0.3);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.locator-btn.spinning .locator-ring {
+  opacity: 1;
+}
+/* Pulse rings on located */
+.locator-pulse {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  background: rgba(212,255,60,0.15);
+  animation: locPulse 2s ease-out infinite;
+  opacity: 0;
+  pointer-events: none;
+}
+.locator-btn.located .locator-pulse { opacity: 1; }
+.locator-pulse:nth-child(2) { animation-delay: 0.7s; }
+@keyframes locPulse {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes locRingSpin { to { transform: rotate(360deg); } }
+
+/* Icon inside button */
+.locator-icon {
+  width: 22px;
+  height: 22px;
+  stroke: #0a0a0a;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.2s;
+  position: relative;
+  z-index: 1;
+}
+.locator-btn.located .locator-icon { stroke: #0a0a0a; }
+
+/* Tooltip label */
+.locator-label {
+  background: #ffffff;
+  color: #0a0a0a;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 22px;
+  white-space: nowrap;
+  box-shadow: 0 3px 16px rgba(0,0,0,0.4);
+  transform: translateX(8px);
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(.34,1.56,.64,1);
+  pointer-events: none;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.locator-wrap:hover .locator-label,
+.locator-wrap.active .locator-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Expanded store panel */
+.locator-panel {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 290px;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,0,0,0.07);
+  overflow: hidden;
+  transform: translateY(12px) scale(0.94);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s cubic-bezier(.34,1.56,.64,1);
+}
+.locator-wrap.panel-open .locator-panel {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: all;
+}
+.lp-head {
+  background: #0a0a0a;
+  padding: 16px 18px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.lp-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+.lp-close {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  cursor: none;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.lp-close:hover { background: rgba(255,255,255,0.16); }
+.lp-status {
+  padding: 14px 18px;
+  background: #f7f5f0;
+  border-bottom: 1px solid #ede9e1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lp-status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #ccc;
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+.lp-status-dot.active { background: #22c55e; animation: dotPulse 2s ease infinite; }
+.lp-status-dot.loading { background: var(--acid); animation: dotPulse 0.8s ease infinite; }
+@keyframes dotPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.lp-status-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: #4a4540;
+}
+.lp-stores {
+  display: flex;
+  flex-direction: column;
+}
+.lp-store {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-bottom: 1px solid #f0ece5;
+  cursor: none;
+  transition: background 0.15s;
+  text-decoration: none;
+}
+.lp-store:last-child { border-bottom: none; }
+.lp-store:hover { background: #f7f5f0; }
+.lp-store-left { display: flex; align-items: center; gap: 11px; }
+.lp-store-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 900; flex-shrink: 0;
+  color: #fff;
+}
+.lp-store-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0a0a0a;
+  line-height: 1.2;
+}
+.lp-store-sub {
+  font-size: 10px;
+  color: #888;
+  margin-top: 1px;
+}
+.lp-store-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.lp-dist {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  color: #0a0a0a;
+}
+.lp-dir-btn {
+  background: #0a0a0a;
+  border: none;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  cursor: none;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, transform 0.15s;
+}
+.lp-dir-btn:hover { background: #333; transform: scale(1.1); }
+.lp-dir-btn svg {
+  width: 11px; height: 11px;
+  stroke: #fff; fill: none; stroke-width: 2.2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.lp-footer {
+  background: #0a0a0a;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: none;
+}
+.lp-footer:hover { background: #1a1a1a; }
+.lp-footer-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--acid);
+}
+.lp-footer svg {
+  width: 14px; height: 14px;
+  stroke: var(--acid); fill: none; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
 </style>
 </head>
 <body>
@@ -672,6 +929,43 @@ footer{background:var(--k);padding:76px 80px 44px;border-top:1px solid rgba(255,
   </div>
 </footer>
 
+
+<!-- SPIN LOCATOR WIDGET -->
+<div class="locator-wrap" id="locatorWrap">
+  <div class="locator-panel" id="locatorPanel">
+    <div class="lp-head">
+      <span class="lp-title">Stores Near You</span>
+      <button class="lp-close" onclick="closeLocator()">✕</button>
+    </div>
+    <div class="lp-status" id="lpStatus">
+      <div class="lp-status-dot" id="lpDot"></div>
+      <span class="lp-status-text" id="lpStatusText">Tap the button to locate you</span>
+    </div>
+    <div class="lp-stores" id="lpStores">
+      <div class="lp-store" style="justify-content:center;padding:20px 18px">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#aaa">Locating nearest stores...</span>
+      </div>
+    </div>
+    <div class="lp-footer" onclick="openStore(null)">
+      <span class="lp-footer-text">See Full Store Map</span>
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;justify-content:flex-end">
+    <div class="locator-label" id="locatorLabel">Locate Nearest Store</div>
+    <button class="locator-btn" id="locatorBtn" onclick="triggerLocate()">
+      <div class="locator-pulse"></div>
+      <div class="locator-pulse"></div>
+      <div class="locator-ring"></div>
+      <svg class="locator-icon" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+        <circle cx="12" cy="12" r="9" stroke-dasharray="2 4" stroke-width="1.2" opacity="0.4"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
 <!-- STORE MODAL -->
 <div class="mo" id="stMo" onclick="closeSt(event)">
   <div class="mb">
@@ -939,6 +1233,139 @@ function showFomo() {
   setTimeout(()=>el.classList.remove('show'),4800);
 }
 setTimeout(()=>{showFomo();setInterval(showFomo,14000+Math.random()*5000);},3500);
+
+// ════ SPIN LOCATOR WIDGET ════
+const RETAILERS_DATA = [
+  { name: 'Walmart', sub: 'Frozen section', bg: '#0071CE', abbr: 'W', chain: 'walmart' },
+  { name: 'Target', sub: 'Frozen aisle', bg: '#CC0000', abbr: 'T', chain: 'target' },
+  { name: 'Whole Foods', sub: 'Organic frozen', bg: '#00674B', abbr: 'WF', chain: 'whole foods' },
+  { name: 'Kroger', sub: 'Harris Teeter, Ralphs', bg: '#00529B', abbr: 'K', chain: 'kroger' },
+  { name: 'Sprouts', sub: 'Natural & organic', bg: '#5A8A3C', abbr: 'SP', chain: 'sprouts' },
+];
+let locatorOpen = false;
+let userLocation = null;
+let locating = false;
+
+function triggerLocate() {
+  const wrap = document.getElementById('locatorWrap');
+  const btn = document.getElementById('locatorBtn');
+
+  if (locatorOpen) { closeLocator(); return; }
+
+  // Open panel first
+  locatorOpen = true;
+  wrap.classList.add('panel-open', 'active');
+
+  if (locating) return;
+  locating = true;
+
+  // Start spinning
+  btn.classList.add('spinning');
+  setLocatorStatus('loading', 'Locating you...');
+
+  // Request geolocation
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => { onLocated(pos.coords.latitude, pos.coords.longitude); },
+      (err) => { onLocationError(err); },
+      { timeout: 8000, maximumAge: 60000 }
+    );
+  } else {
+    onLocationError({ message: 'Geolocation not supported' });
+  }
+}
+
+function onLocated(lat, lng) {
+  const btn = document.getElementById('locatorBtn');
+  userLocation = { lat, lng };
+  locating = false;
+  btn.classList.remove('spinning');
+  btn.classList.add('located');
+  setLocatorStatus('active', 'Located — stores near you');
+
+  // Simulate distances (in a real app you'd call a places API)
+  const baseDists = [0.4, 0.8, 1.3, 2.1, 2.9];
+  // Add slight random variation to make it feel real
+  const dists = baseDists.map(d => (d + (Math.random() * 0.3 - 0.15)).toFixed(1));
+
+  renderLocatorStores(dists, lat, lng);
+  curZ = lat.toFixed(4) + ',' + lng.toFixed(4);
+}
+
+function onLocationError(err) {
+  const btn = document.getElementById('locatorBtn');
+  locating = false;
+  btn.classList.remove('spinning');
+  setLocatorStatus('', 'Could not locate you. Enter zip below.');
+
+  // Fallback: render stores without distances, link to full map
+  const storesDiv = document.getElementById('lpStores');
+  storesDiv.innerHTML = RETAILERS_DATA.slice(0, 4).map(r => `
+    <div class="lp-store" onclick="openDir('${r.chain}')">
+      <div class="lp-store-left">
+        <div class="lp-store-icon" style="background:${r.bg};font-size:${r.abbr.length > 1 ? '9px' : '11px'}">${r.abbr}</div>
+        <div>
+          <div class="lp-store-name">${r.name}</div>
+          <div class="lp-store-sub">${r.sub}</div>
+        </div>
+      </div>
+      <div class="lp-store-right">
+        <button class="lp-dir-btn" onclick="event.stopPropagation();openDir('${r.chain}')">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderLocatorStores(dists, lat, lng) {
+  const storesDiv = document.getElementById('lpStores');
+  // Sort by distance
+  const sorted = RETAILERS_DATA.map((r, i) => ({ ...r, dist: parseFloat(dists[i] || (i+1)*0.8) }))
+    .sort((a, b) => a.dist - b.dist);
+
+  storesDiv.innerHTML = sorted.slice(0, 4).map(r => `
+    <div class="lp-store" onclick="openDirCoords('${r.chain}', ${lat}, ${lng})">
+      <div class="lp-store-left">
+        <div class="lp-store-icon" style="background:${r.bg};font-size:${r.abbr.length > 1 ? '9px' : '11px'}">${r.abbr}</div>
+        <div>
+          <div class="lp-store-name">${r.name}</div>
+          <div class="lp-store-sub">${r.sub}</div>
+        </div>
+      </div>
+      <div class="lp-store-right">
+        <span class="lp-dist">${r.dist} mi</span>
+        <button class="lp-dir-btn" onclick="event.stopPropagation();openDirCoords('${r.chain}', ${lat}, ${lng})">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openDirCoords(chain, lat, lng) {
+  const q = encodeURIComponent(chain + ' near ' + lat + ',' + lng);
+  window.open('https://www.google.com/maps/search/' + q, '_blank');
+}
+
+function closeLocator() {
+  locatorOpen = false;
+  document.getElementById('locatorWrap').classList.remove('panel-open', 'active');
+}
+
+function setLocatorStatus(type, text) {
+  const dot = document.getElementById('lpDot');
+  const txt = document.getElementById('lpStatusText');
+  dot.className = 'lp-status-dot' + (type ? ' ' + type : '');
+  txt.textContent = text;
+}
+
+// Close on outside click
+document.addEventListener('click', e => {
+  const wrap = document.getElementById('locatorWrap');
+  if (locatorOpen && !wrap.contains(e.target)) closeLocator();
+});
+
 </script>
 </body>
 </html>
